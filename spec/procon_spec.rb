@@ -47,7 +47,6 @@ describe '#infix_to_postfix' do
         end
         it '"1 + 2 @ 3"は、"123@+"' do
           infix_array = %w{1 + 2 @ 3}
-          debugger
           Procon.infix_to_postfix(infix_array).join.should eq('123@+')
         end
         it '"3 @ 4 @ 2"は、"34@2@"' do

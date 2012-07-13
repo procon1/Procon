@@ -15,58 +15,44 @@ class Procon
     ope_stack = Array.new
     infix_array.each do |token|
       if token == '('
-        # 左括弧が見つかったらスタックへ覚えておく
         ope_stack.push(token)
       elsif token == ')'
-        # 右括弧が見つかったら、
-        # 左括弧が見つかるまでスタックから取り出して出力
         while ope_stack.any? do
           ope = ope_stack.pop
-          break if ope == '('
+          if ope == '('
+            ope = ope_stack.pop
+            (ope == 'f' || ope == 'g') ? output << ope : ope_stack << ope
+            break
+          end
           output << ope
         end
       elsif function.include?(token)
-        # fとgが見つかったら、
-        # fとgが見つかるうちはスタックから取り出して出力してから、
-        # スタックへ覚えておく
-        while ope_stack.any? && function.include?(ope_stack.last) do
-          ope = ope_stack.pop
-          output << ope
-        end
+        output << pop_operation(ope_stack, function)
         ope_stack.push(token)
       elsif atmark.include?(token)
-        # @が見つかったら、
-        # @が見つかるうちはスタックから取り出して出力してから、
-        # スタックへ覚えておく
-        while ope_stack.any? && atmark.include?(ope_stack.last) do
-          ope = ope_stack.pop
-          output << ope
-        end
+        output << pop_operation(ope_stack, atmark)
         ope_stack.push(token)
       elsif plus_minus.include?(token)
-        # ＋と－が見つかったら、
-        # ＋と－と×と／が見つかるうちはスタックから取り出して出力してから、
-        # スタックへ覚えておく
-        while ope_stack.any? && (plus_minus + function + atmark).include?(ope_stack.last) do
-          ope = ope_stack.pop
-          output << ope
-        end
+        output << pop_operation(ope_stack, (plus_minus + function + atmark))
         ope_stack.push(token)
-      #elsif /(\-{0,1}\d+)/ =~ token
       elsif /\d+/ =~ token
-        # 数値はそのまま出力
         output << token
       else
         printf "LINE#{__LINE__}: token error [#{token}] \n"
         raise "error #{token}"
       end
     end
-    # スタックから全て取り出して出力
-    while ope_stack.any? do
-      output << ope_stack.pop
-    end
+
+    while ope_stack.any? do output << ope_stack.pop end
     output
   end
+
+  def self.pop_operation(ope_stack, operations)
+    ret = []
+    while ope_stack.any? && operations.include?(ope_stack.last) do ret << ope_stack.pop end
+    ret
+  end
+
 end
 
 
