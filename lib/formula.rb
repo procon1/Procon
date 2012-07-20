@@ -41,7 +41,7 @@ class Formula
     end
 
     while ope_stack.any? do output << ope_stack.pop end
-    output
+    output.flatten
   end
 
   def self.pop_operation(ope_stack, operations)
@@ -69,5 +69,11 @@ class Formula
       end
     end
     stack.pop
+  end
+
+  def self.calc(formula)
+    infix = convert_infix_notation(formula)
+    reverse_polish = convert_reverse_polish_notation(infix)
+    calc_reverse_polish_notation(reverse_polish)
   end
 end
