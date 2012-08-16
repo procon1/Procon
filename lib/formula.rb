@@ -1,7 +1,23 @@
 class Formula
 
   def self.convert_infix_notation(formula)
+    ret = []
+    temp = ""
     formula.split(//)
+
+    formula.each do |f|
+      if f =~ /\d/
+        temp = temp + f
+      else
+        ret.push(temp)
+        ret.push(f)
+        temp = ""
+      end
+    end
+    if temp != ""
+      ret.push(temp)
+    end
+    ret
   end
 
   def self.convert_reverse_polish_notation(infix)
