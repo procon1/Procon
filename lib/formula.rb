@@ -3,9 +3,8 @@ class Formula
   def self.convert_infix_notation(formula)
     ret = []
     temp = ""
-    formula.split(//)
 
-    formula.each do |f|
+    formula.split(//).each do |f|
       if f =~ /\d/
         temp = temp + f
       else
@@ -14,10 +13,8 @@ class Formula
         temp = ""
       end
     end
-    if temp != ""
-      ret.push(temp)
-    end
-    ret
+    ret.push(temp) if temp != ""
+    ret.reject {|r| r == ""}
   end
 
   def self.convert_reverse_polish_notation(infix)

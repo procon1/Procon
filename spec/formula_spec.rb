@@ -9,6 +9,14 @@ describe '#convert_infix_notation' do
           formula = '1+1'
           Formula.convert_infix_notation(formula).should eq(%w{1 + 1})
         end
+        it '"10+1"は、"10 + 1"' do
+          formula = '10+1'
+          Formula.convert_infix_notation(formula).should eq(%w{10 + 1})
+        end
+        it '"1+10"は、"1 + 10"' do
+          formula = '1+10'
+          Formula.convert_infix_notation(formula).should eq(%w{1 + 10})
+        end
         context 'カッコがある場合' do
           context 'カッコが1つの場合' do
             it '"f(2)"は、"f ( 2 )"' do
