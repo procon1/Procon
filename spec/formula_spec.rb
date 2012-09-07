@@ -23,9 +23,17 @@ describe '#convert_infix_notation' do
               formula = 'f(2)'
               Formula.convert_infix_notation(formula).should eq(%w{f ( 2 )})
             end
+            it '"f(12)"は、"f ( 12 )"' do
+              formula = 'f(12)'
+              Formula.convert_infix_notation(formula).should eq(%w{f ( 12 )})
+            end
             it '"(1+2)@3"は、"( 1 + 2 ) @ 3"' do
               formula = '(1+2)@3'
               Formula.convert_infix_notation(formula).should eq(%w{( 1 + 2 ) @ 3})
+            end
+            it '"(11+2)@33"は、"( 11 + 2 ) @ 33"' do
+              formula = '(11+2)@33'
+              Formula.convert_infix_notation(formula).should eq(%w{( 11 + 2 ) @ 33})
             end
           end
           context 'カッコが複数の場合' do
