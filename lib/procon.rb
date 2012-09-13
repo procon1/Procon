@@ -7,9 +7,28 @@ class Procon
   end
 
   def create_robots
-    specifications = [Dir.glob("#{File.dirname(__FILE__)}/file/*")]
-    # specificationsからいくつかを組み合わせた仕様書群をrobotクラスに投げる
-    Robot.new.create(siyousyo)
+    robots = []
+    siyousyo.each do |a|
+      r = Robot.new.create(a)
+      robots << r if r.id 
+    end
+    robots
+  end
+
+  # 与えられた部品仕様書群を元にロボットの仕様書を作成
+  # 戻り値：ロボット仕様書の配列
+  # 　⇒１つの配列要素＝１ロボット分の仕様書
+  #
+  # TODO 要修正
+  # 読み込むfileの格納フォルダのパス
+  def siyousyo
+    specifications = Dir.glob("/home/awatanabe21/Procon1/spec/file2/*")
+    file_count = specifications.count
+    siyousyo = []
+    for i in 1..file_count
+      siyousyo << specifications.combination(i).to_a
+    end
+    siyousyo.flatten(1)
   end
 
   def fight(robots)
