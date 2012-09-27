@@ -2,7 +2,7 @@ require 'parts'
 class Robot
   INIT_LIFE = 1000000
 
-  attr_accessor :id, :life, :offence, :deffence, :durability, :size
+  attr_accessor :id, :life, :offence, :deffence, :durability, :size, :buhin_ids
 
   # 親クラスから仕様書を複数受け取り、1つずつ(中身を)Partsクラスに投げる
   def create(specifications)
@@ -41,6 +41,7 @@ class Robot
       self.deffence = deffence
       self.durability = dur.min
       self.size = size
+      self.buhin_ids = parts.map{|p| p.id}.join(',')
     end
     self
   end

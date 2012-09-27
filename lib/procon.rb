@@ -2,7 +2,8 @@ require 'robot'
 
 class Procon
 
-FILES = "/home/atogo1/work/Procon/spec/file2/*"
+#FILES = "/home/atogo1/work/Procon/spec/file2/*"
+FILES = "/home/awatanabe21/Procon1/spec/file2/*"
 
   def create_robots
     robots = []
@@ -16,9 +17,6 @@ FILES = "/home/atogo1/work/Procon/spec/file2/*"
   # 与えられた部品仕様書群を元にロボットの仕様書を作成
   # 戻り値：ロボット仕様書の配列
   # 　⇒１つの配列要素＝１ロボット分の仕様書
-  #
-  # TODO 要修正
-  # 読み込むfileの格納フォルダのパス
   def siyousyo
     specifications = Dir.glob("#{Procon::FILES}")
     file_count = specifications.count
@@ -28,10 +26,6 @@ FILES = "/home/atogo1/work/Procon/spec/file2/*"
     end
     siyousyo.flatten(1)
   end
-
-  def fight(robots)
-  end
-
 end
 
 p Procon.new.create_robots
